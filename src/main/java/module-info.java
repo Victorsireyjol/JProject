@@ -1,8 +1,7 @@
-module org.example.jproject {
+module org.example.javafxtest {
     requires javafx.controls;
     requires javafx.fxml;
 
-
-    opens org.example.jproject to javafx.fxml;
-    exports org.example.jproject;
+    opens view to javafx.fxml;
+    exports view;
 }
