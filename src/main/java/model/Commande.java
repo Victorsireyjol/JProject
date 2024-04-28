@@ -40,12 +40,11 @@ public class Commande {
     public String getProduit() {
         return produit;
     }
-    public void AfficheCommande() {
-        System.out.println("Commande pour le client " + client + ":");
-        System.out.println("Produit: " + produit);
-        System.out.println("Quantité: " + quantite);
-        System.out.println("Statut: " + statut);
+    @Override
+    public String toString() {
+        return "Commande du " + client + ", status : " + statut + ", produits : " + produit + ", quantité : " + quantite;
     }
+
 
 
 }

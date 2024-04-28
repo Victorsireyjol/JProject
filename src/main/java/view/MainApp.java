@@ -14,6 +14,7 @@ import model.Client;
 import model.Commande;
 import model.Produit;
 import controller.CommandeController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,13 +67,22 @@ public class MainApp extends Application {
             commandesPage.start(commandesStage);
         });
 
+        Button StockButton = new Button("Voir le stock");
+        StockButton.setOnAction(e -> {
+            ViewStock stock = new ViewStock(produitsDisponibles);
+            Stage stockstage = new Stage();
+            stock.start(stockstage);
+        });
+
 
         // Mise en page de l'interface utilisateur
         // Bouton pour accéder à la page des commandes
 
 
 
+
         VBox root = new VBox();
+        root.getChildren().add(StockButton);
         root.getChildren().add(commandesButton);
         root.getChildren().addAll(new Label("Clients : "), clientsComboBox);
         root.getChildren().addAll(new Label("Produit:"), produitsComboBox, quantiteTextField, validerButton);

@@ -25,6 +25,6 @@ public class Produit {
 
     @Override
     public String toString() {
-        return nom;
+        return nom + " Quantité : " + quantiteStock ;
     }
 }
