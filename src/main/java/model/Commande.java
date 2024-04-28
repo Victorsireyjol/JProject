@@ -1,16 +1,24 @@
 package model;
 
+import java.util.List;
+
 public class Commande {
-    private int id;
+
     private String produit;
     private int quantite;
     private String statut;
+    private String client ;
+    // Dans la classe Commande ou Client
 
-    public Commande(int id, String produit, int quantite, String statut) {
-        this.id = id;
+
+
+    public Commande(String produit, int quantite, String statut , String client ) {
+
+
         this.produit = produit;
         this.quantite = quantite;
         this.statut = statut;
+        this.client = client;
     }
 
     public int getQuantite() {
@@ -25,23 +33,21 @@ public class Commande {
         this.statut = statut;
     }
 
+    public String getClient() {
+        return client;
+    }
+
     public String getProduit() {
         return produit;
     }
-
-    public void setProduit(String produit) {
-        this.produit = produit;
+    public void AfficheCommande() {
+        System.out.println("Commande pour le client " + client + ":");
+        System.out.println("Produit: " + produit);
+        System.out.println("Quantité: " + quantite);
+        System.out.println("Statut: " + statut);
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    // Autres getters et setters
 }
 
 
