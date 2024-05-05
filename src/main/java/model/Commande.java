@@ -1,24 +1,31 @@
 package model;
 
-import java.util.List;
-
 public class Commande {
 
-    private String produit;
+    private static int nextId = 1;
+    private Produit produit;
     private int quantite;
     private String statut;
-    private String client ;
-    // Dans la classe Commande ou Client
+    private Client client;
 
+    private int id;
 
-
-    public Commande(String produit, int quantite, String statut , String client ) {
-
-
+    public Commande(Produit produit, int quantite, String statut, Client client) {
+        this.id = nextId++;
         this.produit = produit;
         this.quantite = quantite;
         this.statut = statut;
         this.client = client;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    // Getters pour accéder aux propriétés de la commande
+    public Produit getProduit() {
+        return produit;
     }
 
     public int getQuantite() {
@@ -29,27 +36,12 @@ public class Commande {
         return statut;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
-    public String getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public String getProduit() {
-        return produit;
+    // Setter pour modifier le statut de la commande
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
-    @Override
-    public String toString() {
-        return "Commande du " + client + ", status : " + statut + ", produits : " + produit + ", quantité : " + quantite;
-    }
-
-
-
 }
-
-
-
-
-
