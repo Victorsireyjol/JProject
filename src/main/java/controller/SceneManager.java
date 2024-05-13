@@ -2,11 +2,8 @@ package controller;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.BonDeLivraison;
-import view.BonDeLivraisonView;
 import view.CommandesView;
 import view.StockView;
-import view.MainApp;
 
 import java.util.List;
 
@@ -40,12 +37,12 @@ public class SceneManager {
         stage.show();
     }
 
-    public void showBonDeLivraisonView(List<BonDeLivraison> bons) {
-        BonDeLivraisonView bonDeLivraisonView = new BonDeLivraisonView(bons);
-        Scene scene = new Scene(bonDeLivraisonView.render(), 400, 400);
-        stage.setScene(scene);
-        stage.show();
-    }
+//    public void showBonDeLivraisonView(List<BonDeLivraison> bons) {
+//        BonDeLivraisonView bonDeLivraisonView = new BonDeLivraisonView(bons);
+//        Scene scene = new Scene(bonDeLivraisonView.render(), 400, 400);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 
 //    public void showBonDeLivraisonView(List<BonDeLivraison> bons) {
 //        BonDeLivraisonView bonDeLivraisonView = new BonDeLivraisonView();

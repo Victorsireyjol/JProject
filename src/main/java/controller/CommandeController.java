@@ -2,14 +2,15 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.BonDeLivraison;
+import model.BonCommande;
 import model.Client;
 import model.Produit;
 import model.Commande;
+import view.BonCommandeView;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CommandeController {
@@ -17,12 +18,15 @@ public class CommandeController {
     private List<Produit> produits;
     private List<Commande> commandes;
 
+    private List<BonCommande> bonsDeCommandeValidés;
+
     private SceneManager sceneManager ;
 
     public CommandeController(List<Client> clients, List<Produit> produits, List<Commande> commandes) {
         this.clients = clients;
         this.produits = produits;
         this.commandes = commandes;
+        this.bonsDeCommandeValidés = new ArrayList<>();
     }
 
     public ObservableList<Client> getClients() {
@@ -43,15 +47,22 @@ public class CommandeController {
         }
     }
 
-    private void verifierEtValiderCommandes(Produit produit) {
-        commandes.stream()
+    public void verifierEtValiderCommandes(Produit produit) {
+        List<Commande> commandesAValider = commandes.stream()
                 .filter(c -> c.getProduit().equals(produit) && c.getStatut().equals("En attente de stock"))
-                .forEach(c -> {
-                    if (produit.getQuantiteStock() >= c.getQuantite()) {
-                        c.setStatut("Confirmée");
-                        produit.setQuantiteStock(produit.getQuantiteStock() - c.getQuantite());
-                    }
-                });
+                .collect(Collectors.toList());
+
+        for (Commande c : commandesAValider) {
+            if (produit.getQuantiteStock() >= c.getQuantite()) {
+                c.setStatut("Confirmée");
+                produit.setQuantiteStock(produit.getQuantiteStock() - c.getQuantite());
+
+                // Créer un bon de commande
+                BonCommande bonDeCommande = creerBonDeCommande(c);
+
+                bonsDeCommandeValidés.add(bonDeCommande);
+            }
+        }
     }
 
     public String ajouterCommande(Commande commande) {
@@ -60,6 +71,13 @@ public class CommandeController {
                 produit.setQuantiteStock(produit.getQuantiteStock() - commande.getQuantite());
                 commande.setStatut("Confirmée");
                 commandes.add(commande);
+
+                // Créer un bon de commande
+                BonCommande bonDeCommande = creerBonDeCommande(commande);
+
+                // Afficher le bon de commande
+                bonsDeCommandeValidés.add(bonDeCommande);
+
                 return "La commande a été validée.";
             }
         }
@@ -69,33 +87,21 @@ public class CommandeController {
     }
 
 
-    public String validerCommande(Commande commande) {
-        if (commande.getProduit().getQuantiteStock() >= commande.getQuantite()) {
-            commande.getProduit().setQuantiteStock(commande.getProduit().getQuantiteStock() - commande.getQuantite());
-            commande.setStatut("Confirmée");
-            creerBonDeLivraison(commande);
-            return "La commande a été validée.";
-        }
-        return "Stock insuffisant.";
+
+    private BonCommande creerBonDeCommande(Commande commande) {
+        int idCommande = commande.getId();
+        String client = commande.getClient().getNom();
+        Produit produit = commande.getProduit();
+        int quantite = commande.getQuantite();
+        LocalDate dateCommande = LocalDate.now();
+
+        return new BonCommande(idCommande, client, produit, quantite, dateCommande);
     }
 
-    private void creerBonDeLivraison(Commande commande) {
-        BonDeLivraison bon = new BonDeLivraison(
-                commande.getId(),
-                LocalDate.now(),
-                commande.getClient().getDetails(),
-                commande.getProduit().getDetails()
-        );
-        // Logique pour sauvegarder ou afficher le bon de livraison
-       // sauvegarderBonDeLivraison(bon);
+    public List<BonCommande> getBonsDeCommandeValidés() {
+        return bonsDeCommandeValidés;
     }
 
-
-//    public void afficherBonsDeLivraisonParClient(Client client) {
-//        List<BonDeLivraison> bons = serviceDeLivraison.getBonsDeLivraison(client);
-//        // Méthode hypothétique pour récupérer les bons de livraison
-//        afficherBonsDeLivraison(bons);  // Affiche les bons dans une nouvelle fenêtre ou un dialogue
-//    }
 
     public ObservableList<Commande> getCommandesParClient(Client client) {
         return FXCollections.observableArrayList(

@@ -6,9 +6,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import model.BonCommande;
 import model.Client;
 import model.Produit;
 import model.Commande;
+
+import java.util.List;
 
 public class CommandesView {
     private CommandeController controller;
@@ -18,6 +21,9 @@ public class CommandesView {
     private Button validerButton;
     private Button voirCommandesButton;
     private Button voirStockButton;
+
+
+    private Button voirBonsCommandes;
 
     public CommandesView(CommandeController controller) {
         this.controller = controller;
@@ -67,6 +73,9 @@ public class CommandesView {
         voirStockButton = new Button("Voir le stock");
         voirStockButton.setOnAction(e -> controller.showStockView());
 
+        voirBonsCommandes = new Button("Voir les bons de commande");
+        voirBonsCommandes.setOnAction(e -> afficherBonsDeCommande());
+
 
         // Ajout de tous les composants au layout principal
         layout.getChildren().addAll(
@@ -79,6 +88,7 @@ public class CommandesView {
         // Ajouter les boutons au layout des boutons et ce layout au layout principal
         buttonsLayout.getChildren().add(voirCommandesButton);
         buttonsLayout.getChildren().add(voirStockButton);
+        buttonsLayout.getChildren().add(voirBonsCommandes);
         layout.getChildren().add(buttonsLayout);  // Ajouter le layout des boutons tout en bas
 
         return layout;
@@ -107,5 +117,11 @@ public class CommandesView {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void afficherBonsDeCommande() {
+        List<BonCommande> bonsDeCommande = controller.getBonsDeCommandeValidés();
+        BonCommandeView bonsDeCommandeView = new BonCommandeView();
+        bonsDeCommandeView.afficher(bonsDeCommande);
     }
 }
