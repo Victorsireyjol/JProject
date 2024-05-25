@@ -15,11 +15,13 @@ public class StockView {
         this.controller = controller;
         this.stage = stage;
     }
+
     public VBox render() {
         VBox layout = new VBox(10);
         Button backButton = new Button("Retour");
-        backButton.setOnAction(e -> controller.showInitialView());  // Ici, adapter selon la méthode appropriée
+        backButton.setOnAction(e -> controller.showInitialView());
         layout.getChildren().addAll(backButton);
+
         for (Produit produit : controller.getProduits()) {
             HBox productLine = new HBox(10);
             Label productName = new Label(produit.getNom() + " - Stock: " + produit.getQuantiteStock());
@@ -39,8 +41,8 @@ public class StockView {
 
             productLine.getChildren().addAll(productName, quantityField, addButton);
             layout.getChildren().add(productLine);
-
         }
+
         return layout;
     }
 }

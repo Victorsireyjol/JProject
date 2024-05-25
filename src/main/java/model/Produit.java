@@ -1,33 +1,25 @@
 package model;
 
 public class Produit {
+    private int id;
     private String nom;
-    private double prix;  // Ajout du prix comme attribut
     private int quantiteStock;
 
-    // Constructeur avec le prix
-    public Produit(String nom, double prix, int quantiteStock) {
+    public Produit(int id, String nom, int quantiteStock) {
+        this.id = id;
         this.nom = nom;
-        this.prix = prix;
         this.quantiteStock = quantiteStock;
     }
 
-    // Getter pour le prix
-    public double getPrix() {
-        return prix;
+    // Getters et setters
+    public int getId() {
+        return id;
     }
 
-    // Setter pour le prix
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    // Méthode pour obtenir les détails du produit
-    public String getDetails() {
-        return "Produit: " + nom + ", Prix: " + String.format("%.2f €", prix) + ", Quantité en stock: " + quantiteStock;
-    }
-
-    // Getters et setters pour les autres attributs
     public String getNom() {
         return nom;
     }

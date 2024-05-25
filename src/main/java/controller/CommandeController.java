@@ -4,29 +4,35 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.BonCommande;
 import model.Client;
-import model.Produit;
 import model.Commande;
+import model.Produit;
 import view.BonCommandeView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class CommandeController {
     private List<Client> clients;
     private List<Produit> produits;
     private List<Commande> commandes;
-
     private List<BonCommande> bonsDeCommandeValidés;
-
-    private SceneManager sceneManager ;
+    private SceneManager sceneManager;
+    private BonCommandeView bonCommandeView;
+    private AtomicInteger nextCommandeId; // To generate unique IDs
 
     public CommandeController(List<Client> clients, List<Produit> produits, List<Commande> commandes) {
         this.clients = clients;
         this.produits = produits;
         this.commandes = commandes;
         this.bonsDeCommandeValidés = new ArrayList<>();
+        this.nextCommandeId = new AtomicInteger(1); // Initialize with the first ID
+    }
+
+    public int getNewCommandeId() {
+        return nextCommandeId.getAndIncrement();
     }
 
     public ObservableList<Client> getClients() {
@@ -57,9 +63,7 @@ public class CommandeController {
                 c.setStatut("Confirmée");
                 produit.setQuantiteStock(produit.getQuantiteStock() - c.getQuantite());
 
-                // Créer un bon de commande
                 BonCommande bonDeCommande = creerBonDeCommande(c);
-
                 bonsDeCommandeValidés.add(bonDeCommande);
             }
         }
@@ -72,10 +76,7 @@ public class CommandeController {
                 commande.setStatut("Confirmée");
                 commandes.add(commande);
 
-                // Créer un bon de commande
                 BonCommande bonDeCommande = creerBonDeCommande(commande);
-
-                // Afficher le bon de commande
                 bonsDeCommandeValidés.add(bonDeCommande);
 
                 return "La commande a été validée.";
@@ -85,8 +86,6 @@ public class CommandeController {
         commandes.add(commande);
         return "Stock insuffisant. La commande est en attente de réapprovisionnement.";
     }
-
-
 
     private BonCommande creerBonDeCommande(Commande commande) {
         int idCommande = commande.getId();
@@ -98,9 +97,6 @@ public class CommandeController {
         return new BonCommande(idCommande, client, produit, quantite, dateCommande);
     }
 
-    public List<BonCommande> getBonsDeCommandeValidés() {
-        return bonsDeCommandeValidés;
-    }
 
 
     public ObservableList<Commande> getCommandesParClient(Client client) {
@@ -115,6 +111,20 @@ public class CommandeController {
         this.sceneManager = sceneManager;
     }
 
+    public void setBonCommandeView(BonCommandeView bonCommandeView) {
+        this.bonCommandeView = bonCommandeView;
+        this.bonCommandeView.setClients(clients);
+        this.bonCommandeView.setBonsDeCommande(bonsDeCommandeValidés);
+    }
+
+    public void showBonCommandeView() {
+        BonCommandeView bonCommandeView = new BonCommandeView(this);
+        bonCommandeView.setClients(clients);
+        bonCommandeView.setBonsDeCommande(bonsDeCommandeValidés);
+        bonCommandeView.display();
+    }
+
+
     public void showStockView() {
         sceneManager.showStockView();
     }
@@ -125,5 +135,18 @@ public class CommandeController {
 
 
 
-
+    public void mettreAJourStatutCommande(int idCommande, String statut) {
+        for (Commande commande : commandes) {
+            if (commande.getId() == idCommande) {
+                commande.setStatut(statut);
+                break;
+            }
+        }
+    }
 }
+
+
+
+
+
+

@@ -1,46 +1,58 @@
 package model;
 
 public class Commande {
-
-    private static int nextId = 1;
+    private int id;
+    private Client client;
     private Produit produit;
     private int quantite;
     private String statut;
-    private Client client;
 
-    private int id;
-
-    public Commande(Produit produit, int quantite, String statut, Client client) {
-        this.id = nextId++;
+    public Commande(int id, Client client, Produit produit, int quantite, String statut) {
+        this.id = id;
+        this.client = client;
         this.produit = produit;
         this.quantite = quantite;
         this.statut = statut;
-        this.client = client;
     }
 
+    // Getters et setters
 
     public int getId() {
         return id;
     }
 
-    // Getters pour accéder aux propriétés de la commande
-    public Produit getProduit() {
-        return produit;
-    }
-
-    public int getQuantite() {
-        return quantite;
-    }
-
-    public String getStatut() {
-        return statut;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Client getClient() {
         return client;
     }
 
-    // Setter pour modifier le statut de la commande
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
     public void setStatut(String statut) {
         this.statut = statut;
     }
