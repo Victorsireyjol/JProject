@@ -8,14 +8,15 @@ public class BonCommande {
     private Produit produit;
     private int quantite;
     private LocalDate dateCommande;
-    private boolean facture;
+    private Commande commande ;
 
-    public BonCommande(int id, String client, Produit produit, int quantite, LocalDate dateCommande) {
+    public BonCommande(int id, String client, Produit produit, int quantite, LocalDate dateCommande , Commande commande) {
         this.id = id;
         this.client = client;
         this.produit = produit;
         this.quantite = quantite;
         this.dateCommande = dateCommande;
+        this.commande = commande ;
 
     }
 
@@ -32,6 +33,8 @@ public class BonCommande {
     public Produit getProduit() {
         return produit;
     }
+
+    public Commande getCommande(){ return  commande ;}
 
     public int getQuantite() {
         return quantite;

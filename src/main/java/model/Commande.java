@@ -7,12 +7,15 @@ public class Commande {
     private int quantite;
     private String statut;
 
-    public Commande(int id, Client client, Produit produit, int quantite, String statut) {
+    private int prix ;
+
+    public Commande(int id, Client client, Produit produit, int quantite, String statut , int prix) {
         this.id = id;
         this.client = client;
         this.produit = produit;
         this.quantite = quantite;
         this.statut = statut;
+        this.prix = prix;
     }
 
     // Getters et setters
@@ -53,7 +56,22 @@ public class Commande {
         return statut;
     }
 
+    public int getPrix() {
+        return prix;
+    }
+
     public void setStatut(String statut) {
         this.statut = statut;
     }
+
+    public String StringPrix() {
+String stringprix ;
+stringprix =  getPrix() + "$" ;
+return stringprix ;
+
+    }
+
 }
+
+
+

@@ -1,6 +1,7 @@
 package view;
 
 import controller.CommandeController;
+import controller.SceneManager;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -12,6 +13,7 @@ import model.Commande;
 
 public class CommandesView {
     private CommandeController controller;
+    private SceneManager controllermanager ;
     private ComboBox<Client> clientComboBox;
     private ComboBox<Produit> produitComboBox;
     private TextField quantiteTextField;
@@ -88,24 +90,11 @@ public class CommandesView {
         Produit selectedProduit = produitComboBox.getValue();
         try {
             int quantite = Integer.parseInt(quantiteTextField.getText());
-            if (selectedProduit != null && selectedClient != null && quantite > 0) {
-                int newId = controller.getNewCommandeId();
-                Commande nouvelleCommande = new Commande(newId, selectedClient, selectedProduit, quantite, "En attente de stock");
-                String result = controller.ajouterCommande(nouvelleCommande);
-                afficherMessage(result, Alert.AlertType.INFORMATION);
-            } else {
-                afficherMessage("Veuillez remplir tous les champs correctement.", Alert.AlertType.ERROR);
-            }
+            controller.creerCommande(selectedClient, selectedProduit, quantite);
         } catch (NumberFormatException ex) {
-            afficherMessage("La quantité doit être un nombre entier positif.", Alert.AlertType.ERROR);
+            controllermanager.afficherMessage("La quantité doit être un nombre entier positif.", Alert.AlertType.ERROR);
         }
     }
 
-    private void afficherMessage(String message, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle("Notification de Commande");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }

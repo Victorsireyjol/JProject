@@ -11,27 +11,7 @@ import model.Produit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-MainApp extends Application {
+public class  MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,8 +20,8 @@ MainApp extends Application {
         Client client2 = new Client(2, "Client B");
 
         // Initialisation des produits
-        Produit produit1 = new Produit(1, "Produit 1", 100);
-        Produit produit2 = new Produit(2, "Produit 2", 200);
+        Produit produit1 = new Produit(1, "Produit 1", 100,10);
+        Produit produit2 = new Produit(2, "Produit 2", 200,3);
 
         // Initialisation des listes
         ArrayList<Client> clients = new ArrayList<>(Arrays.asList(client1, client2));

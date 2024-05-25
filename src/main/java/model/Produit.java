@@ -5,10 +5,13 @@ public class Produit {
     private String nom;
     private int quantiteStock;
 
-    public Produit(int id, String nom, int quantiteStock) {
+    private int prix;
+
+    public Produit(int id, String nom, int quantiteStock, int prix) {
         this.id = id;
         this.nom = nom;
         this.quantiteStock = quantiteStock;
+        this.prix = prix;
     }
 
     // Getters et setters
@@ -32,7 +35,17 @@ public class Produit {
         return quantiteStock;
     }
 
+    public int getPrix() {
+        return prix;
+    }
+
     public void setQuantiteStock(int quantiteStock) {
         this.quantiteStock = quantiteStock;
+    }
+
+    public String StringPrix() {
+        String stringprix;
+        stringprix = getPrix() + "$";
+        return stringprix;
     }
 }

@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import model.BonCommande;
 import model.Client;
 import model.Commande;
@@ -93,8 +94,9 @@ public class CommandeController {
         Produit produit = commande.getProduit();
         int quantite = commande.getQuantite();
         LocalDate dateCommande = LocalDate.now();
+        Commande commande1 = commande ;
 
-        return new BonCommande(idCommande, client, produit, quantite, dateCommande);
+        return new BonCommande(idCommande, client, produit, quantite, dateCommande , commande1);
     }
 
 
@@ -111,11 +113,7 @@ public class CommandeController {
         this.sceneManager = sceneManager;
     }
 
-    public void setBonCommandeView(BonCommandeView bonCommandeView) {
-        this.bonCommandeView = bonCommandeView;
-        this.bonCommandeView.setClients(clients);
-        this.bonCommandeView.setBonsDeCommande(bonsDeCommandeValidés);
-    }
+
 
     public void showBonCommandeView() {
         BonCommandeView bonCommandeView = new BonCommandeView(this);
@@ -140,6 +138,23 @@ public class CommandeController {
             if (commande.getId() == idCommande) {
                 commande.setStatut(statut);
                 break;
+            }
+        }
+    }
+
+    public void creerCommande(Client selectedClient, Produit selectedProduit, int quantite) {
+        if (selectedProduit != null && selectedClient != null && quantite > 0) {
+            int newId = getNewCommandeId();
+            int prix = selectedProduit.getPrix() * quantite;
+            Commande nouvelleCommande = new Commande(newId, selectedClient, selectedProduit, quantite, "En attente de stock",prix);
+            String result = ajouterCommande(nouvelleCommande);
+            // Appel à la vue pour afficher le message
+            if (sceneManager != null) {
+                sceneManager.afficherMessage(result, Alert.AlertType.INFORMATION);
+            }
+        } else {
+            if (sceneManager != null) {
+                sceneManager.afficherMessage("Veuillez remplir tous les champs correctement.", Alert.AlertType.ERROR);
             }
         }
     }

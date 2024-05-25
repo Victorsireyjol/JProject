@@ -82,7 +82,7 @@ public class BonCommandeView {
                     if (bonCommande == null || empty) {
                         setText(null);
                     } else {
-                        setText("Commande ID: " + bonCommande.getId() + ", Produit: " + bonCommande.getProduit().getNom() + ", Quantité: " + bonCommande.getQuantite());
+                        setText("Commande ID: " + bonCommande.getId() + ", Produit: " + bonCommande.getProduit().getNom() + ", Quantité: " + bonCommande.getQuantite()  + ", Prix: " + bonCommande.getCommande().StringPrix()  + ", Date: " + bonCommande.getDateCommande() + ", Status: " + bonCommande.getCommande().getStatut());
                     }
                 }
             });

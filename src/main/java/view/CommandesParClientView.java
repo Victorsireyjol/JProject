@@ -28,7 +28,7 @@ public class CommandesParClientView {
                 if (commande == null || empty) {
                     setText(null);
                 } else {
-                    setText(commande.getProduit().getNom() + " - Quantité: " + commande.getQuantite() + " - Statut: " + commande.getStatut());
+                    setText(commande.getProduit().getNom() + " - Prix du produit : "+ commande.getProduit().StringPrix() +  " - Quantité: " + commande.getQuantite() +" - Prix Commande : "+ commande.StringPrix() +" - Statut: " + commande.getStatut());
                 }
             }
         });

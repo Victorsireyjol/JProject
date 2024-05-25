@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import view.CommandesView;
 import view.StockView;
@@ -27,7 +28,13 @@ public class SceneManager {
         stage.show();
     }
 
-
+    public void afficherMessage(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Notification");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     public void showInitialView() {
         showCommandesView();
     }
