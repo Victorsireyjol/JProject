@@ -48,4 +48,8 @@ public class Produit {
         stringprix = getPrix() + "$";
         return stringprix;
     }
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

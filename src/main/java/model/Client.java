@@ -17,5 +17,8 @@ public class Client {
         return nom;
     }
 
-
+    @Override
+    public String toString() {
+        return nom;
+    }
 }
